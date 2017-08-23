@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE configuration   
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">   
+<configuration>   
+    <settings>   
+        <!-- Mybatis基本配置信息 -->
+        <setting name="cacheEnabled" value="true" />   
+        <setting name="useGeneratedKeys" value="true" />   
+        <setting name="defaultExecutorType" value="REUSE" />
+        <setting name="logImpl" value="LOG4J" />
+		<setting name="lazyLoadingEnabled" value="true"/>
+		<setting name="aggressiveLazyLoading" value="false"/>   
+    </settings>  
+    <!-- 指定 MyBatis 所用日志的具体实现 -->
+    <!-- typealias用于连接Model层的Bean文件 -->     
+    <typeAliases>      
+       <typeAlias alias="users" type="com.my12306.po.user.User"/> 
+       	<typeAlias  type="com.my12306.po.order.Order"/> 
+       	<typeAlias alias="userinfo" type="com.my12306.po.user.UserInfo"/>
+       	<typeAlias alias="userpeople" type="com.my12306.po.user.UserPeople"/>
+    </typeAliases>      
+    <!-- 数据库的用户名，密码，连接池的基本信息   --> 
+    <environments default="development">
+       <environment id="development">   
+           <transactionManager type="jdbc"/>   
+           <dataSource type="POOLED">   
+             <property name="driver" value="oracle.jdbc.driver.OracleDriver"></property>
+			 <!-- <property name="url" value="jdbc:oracle:thin:@192.168.38.4:1521:orcl"></property> -->
+			 <property name="url" value="jdbc:oracle:thin:@192.168.38.4:1521:orcl"></property>
+			 <property name="username" value="gaokaijin"></property>
+			 <property name="password" value="gkj1995620"></property>
+           </dataSource>   
+       </environment>   
+    </environments>   
+    <!--
+    	要Mapping的Dao文件
+    -->
+    <!-- 我的Mapping在哪里 -->
+    <mappers>
+    	<mapper resource="com/my12306/mapper/LoginMapper.xml" />      
+    	<mapper resource="com/my12306/mapper/OrderMapper.xml" />
+    	<mapper resource="com/my12306/mapper/InfoMapper.xml" />
+    	<mapper resource="com/my12306/mapper/RegeditMapper.xml" />
+    	<mapper resource="com/my12306/mapper/TicketInfoMapper.xml" />
+    	<mapper resource="com/my12306/mapper/TicketMapper.xml" />
+    	<mapper resource="com/my12306/mapper/TrainsMapper.xml" />   
+    	<mapper resource="com/my12306/mapper/UserPeopleMapper.xml" />  	 
+    	<mapper resource="com/my12306/mapper/SeatMapper.xml" />        	       
+    </mappers>    
+</configuration>  

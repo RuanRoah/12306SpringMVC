@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.my12306.mapper.InfoMapper">
+    <select id="query" parameterType="users" resultType="com.my12306.po.user.UserInfo">
+    	select * from TICKET_USER_INFO where userid=#{userid,jdbcType=VARCHAR}
+    </select>  
+    <insert id="insertuserinfo" parameterType="com.my12306.po.user.UserInfo">
+		insert into ticket_user_info values(#{userid,jdbcType=VARCHAR},#{tel},#{name},#{sex},#{id,jdbcType=VARCHAR},#{age})	
+	</insert>
+    <update id="updateinfo" parameterType="com.my12306.po.user.UserInfo">
+    	<!-- update ticket_user_info set tel=#{tel},name=#{name},id=#{id,jdbcType=VARCHAR},age=#{age} where userid=#{userid,jdbcType=VARCHAR} -->
+    	update ticket_user_info set tel=#{tel},name=#{name},sex=#{sex},id=#{id,jdbcType=VARCHAR},age=#{age} where userid=#{userid,jdbcType=VARCHAR}
+    </update>
+    <select id="queryinfo" parameterType="com.my12306.po.user.UserInfo" resultType="com.my12306.po.user.UserInfo">
+    	select * from TICKET_USER_INFO where userid=#{userid,jdbcType=VARCHAR}
+    </select>
+    <update id="updatenew" parameterType="com.my12306.po.user.UserInfo">
+    	<!-- update ticket_user_info set tel=#{tel},name=#{name},id=#{id,jdbcType=VARCHAR},age=#{age} where userid=#{userid,jdbcType=VARCHAR} -->
+    	update TICKET_USER_INFO set tel = #{tel},name = #{name},sex = #{sex},id = #{id},age = #{age} where userid = #{userid}
+    </update>
+</mapper>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- @Compoment这类型注解的类都是需要被扫描的：让Spring的ApplicationContext去加载和初始化所有加了注解的类，并实例化 
+		@Repository:数据层的dao @Service:service就是service @Controller:web比如：action和springmvc-controller类 -->
+	<!-- 自动扫包 -->
+	<context:component-scan base-package="com.my12306.*"></context:component-scan>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url"
+			value="jdbc:oracle:thin:@192.168.38.4:1521:orcl"></property>
+		<property name="username" value="roah"></property>
+		<property name="password" value="roah0412"></property>
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*Insert" propagation="REQUIRED"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="*Delete" propagation="REQUIRED"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="*Update" propagation="REQUIRED"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="*" read-only="true" propagation="SUPPORTS" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut expression="execution(* com.service.impl.*.*(..))"
+			id="pointcut0" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut0" />
+	</aop:config>
+	<!-- 处理映射器将bean的name作为url进行查找，需要在配置Handle时指定name（即url） -->
+	<!-- <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" 
+		/> SimpleControllerHandlerAdapter是一个处理器适配器，所有处理适配器都要实现H andlerAdapter接口 <bean 
+		class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" 
+		/> -->
+	<!-- 视图解析器 -->
+	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
+		/>  -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 前缀 -->
+		<property name="prefix">
+			<value>/WEB-INF/view/</value>
+		</property>
+		<!-- 后缀 -->
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<!-- 文件解析器 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 上传文件大小上限，单位为字节（10MB） -->
+		<property name="maxUploadSize">
+			<value>10485760</value>
+		</property>
+		<!-- 请求的编码格式，必须和jSP的pageEncoding属性一致，以便正确读取表单的内容，默认为ISO-8859-1 -->
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+	</bean>
+	
+	
+	<bean id="stringHttpMessageConverter"
+		class="org.springframework.http.converter.StringHttpMessageConverter" />
+
+	<bean id="mappingJacksonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+	
+	<mvc:annotation-driven >  
+    <!-- 消息转换器 -->  
+    <mvc:message-converters register-defaults="true">  
+      <bean class="org.springframework.http.converter.StringHttpMessageConverter">  
+        <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>  
+      </bean>  
+    </mvc:message-converters>  
+  </mvc:annotation-driven>  
+	
+	<!--  <mvc:annotation-driven conversion-service="conversionService" /> -->
+	<!-- 自定义的类型转换器 -->
+	<!-- <bean id="conversionService"
+		class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="com.convert.StringToDateConverter"
+					p:datePattern="yyyy-MM-dd hh:mm:ss"></bean>
+			</list>
+		</property>
+	</bean> -->
+</beans>

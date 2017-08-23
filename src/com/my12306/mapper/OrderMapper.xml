@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.my12306.mapper.OrderMapper">
+    <select id="getOrderByOrderId" resultType="com.my12306.po.order.Order">
+    	select * from TICKET_ORDER where orderid=#{orderId}
+    </select>
+    
+    <select id="getOrderByUserId" resultType="com.my12306.po.order.Order">
+    	select * from TICKET_ORDER where userId=#{userId}
+    </select>
+    
+    <insert id="addOrder" parameterType="com.my12306.po.order.Order">
+    	insert into TICKET_ORDER values(#{orderId},#{trainId},#{startIndex},
+    	#{endIndex},#{seatId},#{peopleName},#{userId},#{START_DATE},#{FINISH_DATE},#{isPay},
+    	#{START_CITY},#{ARRIVE_CITY},#{cost},#{seatN})
+        
+    </insert>
+    
+    <delete id="deleteOrder">
+    	delete from TICKET_ORDER where orderid=#{orderId}
+    </delete>
+    
+    	<update id="updateOrder" parameterType="com.my12306.po.order.Order">
+		update TICKET_ORDER 
+		set ISPAY = 3
+		where orderid=#{orderId}
+	</update>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.my12306.mapper.SeatMapper">
+    <!-- 这里namespace必须是Dao接口的路径” -->
+    <select id="getPathBySeatid" parameterType="java.lang.String" resultType="java.lang.String">
+    select path from tra_seat_order where id=#{id}
+    </select>
+    
+    <update id="updatePathBySeatid"  >
+    update tra_seat_order set path=#{1} where id=#{0}
+    
+    </update>
+    
+    <select id="getSeat" parameterType="java.lang.String" resultType="java.lang.String">
+    select seat_num from tra_seat_order where id=#{id}
+    </select>
+</mapper>

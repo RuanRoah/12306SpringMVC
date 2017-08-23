@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.my12306.mapper.UserPeopleMapper">
+<insert id="insertpeople" parameterType="userpeople" >
+		insert into TICKET_USER_HUMAN values (#{userid}, #{al_name}, #{al_id}, #{id}, #{al_tel})
+</insert>
+<select id="querypeople" parameterType="userpeople" resultType="userpeople">
+    	select * from TICKET_USER_HUMAN where userid=#{userid,jdbcType=VARCHAR}
+</select>
+<delete id="deletepeople" parameterType="java.lang.String">
+    	delete from TICKET_USER_HUMAN where id=#{id,jdbcType=VARCHAR}
+</delete>  
+<select id="search" parameterType="userpeople" resultType="userpeople">
+    	select * from TICKET_USER_HUMAN where userid=#{userid,jdbcType=VARCHAR} and id=#{id,jdbcType=VARCHAR}
+</select>
+<update id="updatepeople" parameterType="userpeople" >
+		update TICKET_USER_HUMAN set al_name=#{al_name},al_id=#{al_id},al_tel=#{al_tel} where id=#{id,jdbcType=VARCHAR}
+</update>
+
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.my12306.mapper.TicketMapper">
+<!-- 	<select id="queryTrainsbyDate" resultType="com.my12306.po.train.Train">
+		select * from tra_num where start_date=#{date}	
+	</select>
+	
+	<select id="querySeatsbyDateAndTRA_NUM" resultType="com.my12306.po.ticket.Seat">
+		select * from tra_seat_order where tra_num=#{0} and start_date=#{1}
+	</select>
+	
+	<select id="querySeatsbyIntID" resultType="com.my12306.po.ticket.Seat">
+		select * from tra_seat_order where 
+		<foreach collection="array" item="queryseat" open="" close="" separator="OR">
+			SEAT_ID=#{queryseat}
+		</foreach>
+		
+		<foreach collection="ids" item="plid" open="" close="" separator="OR">  
+   PLID = #{plid}  
+  </foreach> 
+	</select>
+	
+	
+	<update id="updateSeatPathbySeatid">
+		update tra_seat_order
+		set path=#{1}
+		where seat_id=#{0}
+	</update> -->
+	
+	<!-- new queryTickets -->
+	<select id="queryTrainInfosbyDate" resultType="com.my12306.po.train.TrainInfo">
+		select * from ticket_train_info where traindate=#{date}
+	</select>
+	
+	<select id="queryTrainsbyTrain_ID" resultType="com.my12306.po.train.Trains">
+		select * from ticket_trains where trainid=#{train_ID}
+	</select>
+	
+	<select id="querySeatsbyTrain_id" resultType="com.my12306.po.ticket.Seat">
+		select * from tra_seat_order where tra_num=#{0} and type=#{1}
+	</select>
+	
+</mapper>

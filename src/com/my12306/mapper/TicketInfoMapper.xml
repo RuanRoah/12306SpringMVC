@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.my12306.mapper.TicketInfoMapper">
+	<select id="geTicketInfoById" resultType="com.my12306.po.ticket.TicketInfo">
+		select * from TICKET_TICKET_INFO where id=#{id}
+	</select>
+	
+	<select id="geTicketInfoByTrainId" resultType="com.my12306.po.ticket.TicketInfo">
+		select * from TICKET_TICKET_INFO where trainId=#{trainId}
+	</select>
+	
+	<update id="changeSeatNum">
+		update TICKET_TICKET_INFO set seatNum=#{seatNum} where id=#{id}
+	</update>
+	
+	<select id="geTicketInfoByStartTime" resultType="com.my12306.po.ticket.TicketInfo">
+		select * from TICKET_TICKET_INFO where startTime=#{startTime}
+	</select>
+</mapper>
